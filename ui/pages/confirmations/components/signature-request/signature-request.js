@@ -82,8 +82,7 @@ import BlockaidBannerAlert from '../security-provider-banner-alert/blockaid-bann
 
 ///: BEGIN:ONLY_INCLUDE_IF(snaps)
 import InsightWarnings from '../../../../components/app/snaps/insight-warnings';
-///: END:ONLY_INCLUDE_IF
-import { BlockaidUnavailableBannerAlert } from '../blockaid-unavailable-banner-alert/blockaid-unavailable-banner-alert';
+import { NetworkChangeToastLegacy } from '../confirm/network-change-toast';
 import Message from './signature-request-message';
 import Footer from './signature-request-footer';
 
@@ -382,9 +381,7 @@ const SignatureRequest = ({
           }}
         />
       )}
-      {
-        ///: END:ONLY_INCLUDE_IF
-      }
+      <NetworkChangeToastLegacy confirmation={txData} />
     </>
   );
 };

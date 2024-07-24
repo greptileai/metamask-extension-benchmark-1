@@ -57,7 +57,7 @@ import SnapLegacyAuthorshipHeader from '../../../../components/app/snaps/snap-le
 import InsightWarnings from '../../../../components/app/snaps/insight-warnings';
 ///: END:ONLY_INCLUDE_IF
 import { BlockaidResultType } from '../../../../../shared/constants/security-provider';
-import { BlockaidUnavailableBannerAlert } from '../blockaid-unavailable-banner-alert/blockaid-unavailable-banner-alert';
+import { NetworkChangeToastLegacy } from '../confirm/network-change-toast';
 import SignatureRequestOriginalWarning from './signature-request-original-warning';
 
 export default class SignatureRequestOriginal extends Component {
@@ -452,6 +452,7 @@ export default class SignatureRequestOriginal extends Component {
             {rejectNText}
           </ButtonLink>
         ) : null}
+        <NetworkChangeToastLegacy confirmation={txData} />
       </div>
     );
   };

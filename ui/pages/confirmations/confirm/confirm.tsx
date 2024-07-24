@@ -11,7 +11,8 @@ import { MMISignatureMismatchBanner } from '../../../components/app/mmi-signatur
 ///: END:ONLY_INCLUDE_IF
 import { Nav } from '../components/confirm/nav';
 import { Title } from '../components/confirm/title';
-import { Page } from '../../../components/multichain/pages/page';
+import EditGasFeePopover from '../components/edit-gas-fee-popover';
+import { NetworkChangeToast } from '../components/confirm/network-change-toast';
 import setCurrentConfirmation from '../hooks/setCurrentConfirmation';
 import syncConfirmPath from '../hooks/syncConfirmPath';
 import { LedgerInfo } from '../components/confirm/ledger-info';
@@ -25,24 +26,32 @@ const Confirm = () => {
   const processAction = useConfirmationAlertActions();
 
   return (
-    <AlertActionHandlerProvider onProcessAction={processAction}>
-      <Page className="confirm_wrapper">
-        <Nav />
-        <Header />
-        {
-          ///: BEGIN:ONLY_INCLUDE_IF(build-mmi)
-          <MMISignatureMismatchBanner />
-          ///: END:ONLY_INCLUDE_IF
-        }
-        <ScrollToBottom>
-          <BlockaidLoadingIndicator />
-          <LedgerInfo />
-          <Title />
-          <Info />
-        </ScrollToBottom>
-        <Footer />
-      </Page>
-    </AlertActionHandlerProvider>
+    <TransactionModalContextProvider>
+      {/* This context should be removed once we implement the new edit gas fees popovers */}
+      <GasFeeContextProvider transaction={currentConfirmation}>
+        <EIP1559TransactionGasModal />
+        <ConfirmAlerts>
+          <Page className="confirm_wrapper">
+            <Nav />
+            <Header />
+            <ScrollToBottom>
+              {
+                ///: BEGIN:ONLY_INCLUDE_IF(build-mmi)
+                <MMISignatureMismatchBanner />
+                ///: END:ONLY_INCLUDE_IF
+              }
+              <BlockaidLoadingIndicator />
+              <LedgerInfo />
+              <Title />
+              <Info />
+              <PluggableSection />
+            </ScrollToBottom>
+            <Footer />
+            <NetworkChangeToast />
+          </Page>
+        </ConfirmAlerts>
+      </GasFeeContextProvider>
+    </TransactionModalContextProvider>
   );
 };
 
